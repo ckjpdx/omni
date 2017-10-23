@@ -1,14 +1,24 @@
 $('document').ready(function(){
 
-var userID = 0;
-
+  function rolodexPerson(name, number){
+    this.name = name;
+    this.number = number;
+  }
+  var userID = 0;
+  var rolodexArr = [];
   $("#rolodexForm").submit(function(event) {
     event.preventDefault();
-    console.log('s');
     userID++;
     var userName = $("#nameInput").val();
     var userNumber = $("#numberInput").val();
-    $("#rolodexDiv").prepend("<div id='rolodexID"+userID+"'><h3>"+userName+"</h3><p>"+userNumber+"</p></div>");
+    rolodexArr.push(new rolodexPerson(userName, userNumber));
+    console.log(rolodexArr);
+    //display entries in roloxdex
+    $("#directoryDiv").empty();
+    for (i=0; i<rolodexArr.length; i++){
+      $("#directoryDiv").prepend("<div id='rolodexArrIndex"+i+"' class='card'><p>Name: "+rolodexArr[i].name+"</p></div>");
+
+    }
   });
 
 });

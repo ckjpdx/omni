@@ -7,35 +7,31 @@
 // [3],[2,3]  [3,2],[1]
 //            [3,1],[2]
 
-function permCount(permInput){
-  var hasRepeats = /(.)\1+/;
+function permutator(permInput){
   var inputArr = permInput.split("");
-  var permArr = [];
-  var noRepeatPermCount = 0;
-  function recurse(inputArr, permArr){
+  var currPerm = [];
+  var permList = [];
+  function recurse(inputArr, currPerm){
     if (inputArr.length === 0){
-      var permStr = permArr.join("");
-      if (!(hasRepeats.test(permStr))) {
-        noRepeatPermCount++;
-      }
+      $('#display-perm').append('<h1>' + currPerm.join("") + '</h1>');
     } else {
       inputArr.forEach(function(element, index){
         var branchInputArr = inputArr.slice();
-        var branchPermArr = permArr.slice();
-        branchPermArr.push(branchInputArr[index]);
+        var branchCurrPerm = currPerm.slice();
+        branchCurrPerm.push(branchInputArr[index]);
         branchInputArr.splice(index, 1);
-        recurse(branchInputArr, branchPermArr);
+        recurse(branchInputArr, branchCurrPerm);
       });
     }
+    return permList;
   }
-  recurse(inputArr, permArr);
-  return noRepeatPermCount;
+  return recurse(inputArr, currPerm);
 }
 ////////////////////////////////////////////////////////
 $(function(){
   $("#permutate-form").submit(function(event) {
     event.preventDefault();
     var permInput = $('#permutate-input').val();
-    $('#display-perm').text(permCount(permInput));
+    permutator(permInput);
   });
 });
